@@ -4,11 +4,12 @@ import csv, io, json, sys, time, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-API       = "https://www.vpngate.net/api/iphone/"
-MIN_SPEED = 1_000_000   # 1 Mbps
-MAX_PING  = 150         # ms
-TOP_N     = 20
-RETRIES   = 3
+API           = "https://www.vpngate.net/api/iphone/"
+MIN_SPEED     = 1_000_000      # 1 Mbps
+MAX_PING      = 150            # ms (VPN Gate 측정값)
+MIN_UPTIME_MS = 86_400_000     # 1일 이상 유지된 서버만
+TOP_N         = 20
+RETRIES       = 3
 
 def fetch_text(url, timeout=30):
     last_err = None
@@ -31,16 +32,22 @@ def parse(text):
     return list(csv.DictReader(io.StringIO("\n".join([header] + lines[1:]))))
 
 def to_int(v, default=0):
-    try:    return int(v)
-    except: return default
+    try:
+        return int(v)
+    except:
+        return default
 
 def filter_servers(rows):
     out = []
     for r in rows:
-        ping  = to_int(r.get("Ping"), 9999)
-        speed = to_int(r.get("Speed"), 0)
-        if ping <= 0 or ping > MAX_PING:  continue
-        if speed < MIN_SPEED:             continue
+        ping      = to_int(r.get("Ping"), 9999)
+        speed     = to_int(r.get("Speed"), 0)
+        uptime_ms = to_int(r.get("Uptime"), 0)
+
+        if ping <= 0 or ping > MAX_PING:   continue
+        if speed < MIN_SPEED:              continue
+        if uptime_ms < MIN_UPTIME_MS:      continue
+
         out.append({
             "host": r.get("HostName", ""),
             "ip":   r.get("IP", ""),
@@ -49,7 +56,7 @@ def filter_servers(rows):
             "ping_ms": ping,
             "speed_mbps": round(speed / 1_000_000, 2),
             "score": to_int(r.get("Score")),
-            "uptime_days": to_int(r.get("Uptime")),
+            "uptime_days": round(uptime_ms / 86_400_000, 1),
             "sessions": to_int(r.get("NumVpnSessions")),
         })
     out.sort(key=lambda s: (s["ping_ms"], -s["speed_mbps"]))
@@ -71,7 +78,7 @@ def main():
     for s in filtered:
         print(f"  {s['country']:3} {s['ip']:15} "
               f"ping={s['ping_ms']:>4}ms speed={s['speed_mbps']:>7.2f}Mbps "
-              f"uptime={s['uptime_days']}d")
+              f"uptime={s['uptime_days']:>5}d")
 
 if __name__ == "__main__":
     main()
