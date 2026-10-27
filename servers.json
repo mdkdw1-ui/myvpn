@@ -1,0 +1,225 @@
+{
+  "updated": "2026-10-27T06:41:58+00:00",
+  "servers": [
+    {
+      "host": "vpn929411652",
+      "ip": "27.4.47.59",
+      "country": "IN",
+      "country_long": "India",
+      "ping_ms": 1,
+      "speed_mbps": 72.02,
+      "score": 592906,
+      "uptime_days": 0,
+      "sessions": 7
+    },
+    {
+      "host": "vpn137812529",
+      "ip": "218.228.192.151",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 2,
+      "speed_mbps": 737.94,
+      "score": 1493190,
+      "uptime_days": 7138012623,
+      "sessions": 89
+    },
+    {
+      "host": "vpn945893058",
+      "ip": "59.138.139.69",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 2,
+      "speed_mbps": 537.9,
+      "score": 1453120,
+      "uptime_days": 6259025623,
+      "sessions": 126
+    },
+    {
+      "host": "vpn294794153",
+      "ip": "144.126.151.157",
+      "country": "US",
+      "country_long": "United States",
+      "ping_ms": 2,
+      "speed_mbps": 158.88,
+      "score": 1182692,
+      "uptime_days": 644991623,
+      "sessions": 87
+    },
+    {
+      "host": "vpn240054995",
+      "ip": "121.84.19.218",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 2,
+      "speed_mbps": 78.62,
+      "score": 811868,
+      "uptime_days": 121256623,
+      "sessions": 71
+    },
+    {
+      "host": "vpn419460835",
+      "ip": "138.64.81.88",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 3,
+      "speed_mbps": 611.8,
+      "score": 1495398,
+      "uptime_days": 843355623,
+      "sessions": 105
+    },
+    {
+      "host": "vpn652870061",
+      "ip": "126.76.96.220",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 3,
+      "speed_mbps": 572.95,
+      "score": 656879,
+      "uptime_days": 0,
+      "sessions": 18
+    },
+    {
+      "host": "opengw",
+      "ip": "217.138.212.62",
+      "country": "RO",
+      "country_long": "Romania",
+      "ping_ms": 3,
+      "speed_mbps": 526.17,
+      "score": 857577,
+      "uptime_days": 134258623,
+      "sessions": 99
+    },
+    {
+      "host": "vpn146183221",
+      "ip": "124.212.251.101",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 3,
+      "speed_mbps": 357.53,
+      "score": 643026,
+      "uptime_days": 0,
+      "sessions": 26
+    },
+    {
+      "host": "vpn865239687",
+      "ip": "27.92.168.168",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 4,
+      "speed_mbps": 876.36,
+      "score": 1443167,
+      "uptime_days": 1068914623,
+      "sessions": 75
+    },
+    {
+      "host": "vpn413896691",
+      "ip": "59.129.41.98",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 4,
+      "speed_mbps": 850.18,
+      "score": 1300953,
+      "uptime_days": 484853623,
+      "sessions": 82
+    },
+    {
+      "host": "vpn133548335",
+      "ip": "180.147.166.106",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 4,
+      "speed_mbps": 576.29,
+      "score": 825147,
+      "uptime_days": 146604623,
+      "sessions": 33
+    },
+    {
+      "host": "vpn671350283",
+      "ip": "153.180.162.195",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 4,
+      "speed_mbps": 420.98,
+      "score": 657234,
+      "uptime_days": 0,
+      "sessions": 52
+    },
+    {
+      "host": "vpn262831086",
+      "ip": "153.151.191.71",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 4,
+      "speed_mbps": 189.21,
+      "score": 1336715,
+      "uptime_days": 484853623,
+      "sessions": 68
+    },
+    {
+      "host": "vpn294714738",
+      "ip": "221.49.92.164",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 5,
+      "speed_mbps": 1293.72,
+      "score": 712095,
+      "uptime_days": 52236623,
+      "sessions": 61
+    },
+    {
+      "host": "vpn219650000",
+      "ip": "116.67.212.245",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 5,
+      "speed_mbps": 869.03,
+      "score": 851859,
+      "uptime_days": 146604623,
+      "sessions": 91
+    },
+    {
+      "host": "vpn990898893",
+      "ip": "126.224.111.147",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 5,
+      "speed_mbps": 739.07,
+      "score": 1463336,
+      "uptime_days": 570924623,
+      "sessions": 93
+    },
+    {
+      "host": "vpn757481522",
+      "ip": "121.81.157.127",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 5,
+      "speed_mbps": 565.91,
+      "score": 651755,
+      "uptime_days": 0,
+      "sessions": 10
+    },
+    {
+      "host": "vpn327481064",
+      "ip": "60.95.76.42",
+      "country": "JP",
+      "country_long": "Japan",
+      "ping_ms": 5,
+      "speed_mbps": 489.26,
+      "score": 643720,
+      "uptime_days": 0,
+      "sessions": 14
+    },
+    {
+      "host": "vpn759761201",
+      "ip": "125.253.56.120",
+      "country": "AU",
+      "country_long": "Australia",
+      "ping_ms": 5,
+      "speed_mbps": 82.2,
+      "score": 1348366,
+      "uptime_days": 484853623,
+      "sessions": 72
+    }
+  ]
+}
