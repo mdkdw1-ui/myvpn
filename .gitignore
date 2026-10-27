@@ -1,0 +1,13 @@
+# secrets
+*.ovpn
+*.conf
+*.key
+*.pem
+.env
+*.keystore
+*.jks
+
+# termux / python
+__pycache__/
+*.pyc
+.venv/
