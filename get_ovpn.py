@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""servers.json의 서버들에 대해 .ovpn 프로필을 추출해 out/에 저장."""
+"""servers.json의 서버들에 대해 .ovpn 프로필을 추출해 out/에 저장.
+   실제 프로필이 저장된 서버만 servers.json에 남긴다."""
 import base64, csv, io, json, sys, urllib.request
 from pathlib import Path
 
-API       = "https://www.vpngate.net/api/iphone/"
-OUT_DIR   = Path(__file__).resolve().parent / "out"
-SERVERS   = Path(__file__).resolve().parent / "servers.json"
-RETRIES   = 3
+API     = "https://www.vpngate.net/api/iphone/"
+OUT_DIR = Path(__file__).resolve().parent / "out"
+SERVERS = Path(__file__).resolve().parent / "servers.json"
+RETRIES = 3
 
 def fetch_text(url, timeout=30):
     last_err = None
@@ -28,7 +29,8 @@ def parse(text):
     return list(csv.DictReader(io.StringIO("\n".join([header] + lines[1:]))))
 
 def main():
-    wanted = {s["ip"] for s in json.loads(SERVERS.read_text())["servers"]}
+    data   = json.loads(SERVERS.read_text())
+    wanted = {s["ip"] for s in data["servers"]}
     rows   = parse(fetch_text(API))
     OUT_DIR.mkdir(exist_ok=True)
 
@@ -46,9 +48,17 @@ def main():
         saved += 1
         print(f"saved: {path.name}", file=sys.stderr)
 
-    print(f"total saved: {saved}", file=sys.stderr)
-    if saved == 0:
-        raise SystemExit("no profiles saved")
+    kept = []
+    for s in data["servers"]:
+        if (OUT_DIR / f"{s['country']}_{s['ip']}.ovpn").exists():
+            kept.append(s)
+
+    data["servers"] = kept
+    SERVERS.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"saved: {saved}  kept: {len(kept)}", file=sys.stderr)
+
+    if not kept:
+        raise SystemExit("no profiles kept")
 
 if __name__ == "__main__":
     main()
