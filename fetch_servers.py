@@ -25,7 +25,6 @@ data-ciphers-fallback AES-128-CBC
 auth SHA1
 tls-version-min 1.0
 tls-cipher DEFAULT:@SECLEVEL=0
-remote-cert-tls server
 verb 3
 """
 
