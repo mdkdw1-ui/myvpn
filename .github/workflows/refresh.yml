@@ -17,13 +17,6 @@ jobs:
 
       - run: python fetch_servers.py
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ovpn-profiles
-          path: out/*.ovpn
-          retention-days: 3
-          if-no-files-found: error
-
       - name: commit servers.json if changed
         run: |
           git config user.name  "github-actions[bot]"
@@ -33,5 +26,5 @@ jobs:
             echo "no changes"
             exit 0
           fi
-          git commit -m "chore: refresh servers.json + profiles"
+          git commit -m "chore: refresh servers.json (with OpenVPN configs)"
           git push
