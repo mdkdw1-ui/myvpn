@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""VPN Gate 서버 목록을 받아 품질 필터 후 servers.json으로 저장."""
+"""VPN Gate 서버 목록을 받아 품질 필터 후 servers.json으로 저장.
+   OpenVPN 설정(base64)도 함께 포함한다."""
 import csv, io, json, sys, time, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 API           = "https://www.vpngate.net/api/iphone/"
 MIN_SPEED     = 1_000_000      # 1 Mbps
-MAX_PING      = 150            # ms (VPN Gate 측정값)
-MIN_UPTIME_MS = 86_400_000     # 1일 이상 유지된 서버만
+MAX_PING      = 150            # ms
+MIN_UPTIME_MS = 86_400_000     # 1일 이상
 TOP_N         = 20
 RETRIES       = 3
 
@@ -22,7 +23,7 @@ def fetch_text(url, timeout=30):
             last_err = e
             print(f"retry {i+1}/{RETRIES}: {e}", file=sys.stderr)
             time.sleep(2 * (i + 1))
-    raise SystemExit(f"fetch failed after {RETRIES} tries: {last_err}")
+    raise SystemExit(f"fetch failed: {last_err}")
 
 def parse(text):
     lines = [ln for ln in text.splitlines() if ln and not ln.startswith("*")]
@@ -32,10 +33,8 @@ def parse(text):
     return list(csv.DictReader(io.StringIO("\n".join([header] + lines[1:]))))
 
 def to_int(v, default=0):
-    try:
-        return int(v)
-    except:
-        return default
+    try:    return int(v)
+    except: return default
 
 def filter_servers(rows):
     out = []
@@ -43,10 +42,12 @@ def filter_servers(rows):
         ping      = to_int(r.get("Ping"), 9999)
         speed     = to_int(r.get("Speed"), 0)
         uptime_ms = to_int(r.get("Uptime"), 0)
+        b64       = (r.get("OpenVPN_ConfigData_Base64") or "").strip()
 
         if ping <= 0 or ping > MAX_PING:   continue
         if speed < MIN_SPEED:              continue
         if uptime_ms < MIN_UPTIME_MS:      continue
+        if not b64:                        continue
 
         out.append({
             "host": r.get("HostName", ""),
@@ -58,6 +59,7 @@ def filter_servers(rows):
             "score": to_int(r.get("Score")),
             "uptime_days": round(uptime_ms / 86_400_000, 1),
             "sessions": to_int(r.get("NumVpnSessions")),
+            "openvpn_config_base64": b64,
         })
     out.sort(key=lambda s: (s["ping_ms"], -s["speed_mbps"]))
     return out[:TOP_N]
@@ -74,11 +76,6 @@ def main():
         "servers": filtered,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"written: {out_path}", file=sys.stderr)
-
-    for s in filtered:
-        print(f"  {s['country']:3} {s['ip']:15} "
-              f"ping={s['ping_ms']:>4}ms speed={s['speed_mbps']:>7.2f}Mbps "
-              f"uptime={s['uptime_days']:>5}d")
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,6 @@ jobs:
         with: { python-version: "3.12" }
 
       - run: python fetch_servers.py
-      - run: python get_ovpn.py
 
       - uses: actions/upload-artifact@v4
         with:
