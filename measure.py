@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""servers.json의 각 서버에 TCP connect 3회 → measured_ms 병합."""
+"""servers.json의 각 서버에 TCP connect 3회 → measured_ms 병합 + 정렬."""
 import json, re, socket, statistics, time
 from pathlib import Path
 
@@ -47,6 +47,10 @@ def main():
         s["measured_ms"] = round(statistics.mean(ok), 1) if ok else None
         print(f"{s['country']} {s['ip']:15} tcp/{port} measured={s['measured_ms']}ms")
 
+    # 실측 있는 서버 우선, 그다음 속도
+    data["servers"].sort(
+        key=lambda s: (s.get("measured_ms") or 9999, -s["speed_mbps"])
+    )
     SERVERS.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     ok = sum(1 for s in data["servers"] if s.get("measured_ms"))
     print(f"measured: {ok}/{len(data['servers'])}")
